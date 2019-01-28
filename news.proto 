@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package news.v1;
+
+option go_package = "news";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service NewsService {
+	rpc CreateNews(CreateNewsRequest) returns (CreateNewsResponse) {
+		option (google.api.http) ={
+			post: "/v1/news"
+			body: "body"
+		};
+	}
+}
+
+message News {
+	string id = 1;
+	string title = 2;
+	string description = 3;
+    string h1 = 4;
+    string text = 5;
+	bool published = 6;
+    
+	google.protobuf.Timestamp created_at = 7;
+	google.protobuf.Timestamp updated_at = 8;
+}
+
+message CreateNewsRequest {
+	News body = 1;
+}
+
+message CreateNewsResponse {
+	string id = 1;
+}
