@@ -1,0 +1,15 @@
+scalar Date
+
+type User {
+    id: ID!
+    username: String!
+}
+
+type News {
+    id: ID!
+    title: String!
+	description: String!
+    h1: String!
+    text: String!
+	published: Bool!
+}

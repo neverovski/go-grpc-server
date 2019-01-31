@@ -1,0 +1,9 @@
+version: '2.3'
+
+services:
+  api-server:
+    build: ..
+    volumes:
+      - .:/go/src/api-server
+    ports:
+      - "8080:8080"
