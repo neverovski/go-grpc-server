@@ -28,6 +28,7 @@ RUN \
 
 # Compile protobuf, grpc and context
 RUN \
+    go get github.com/segmentio/ksuid && \
     go get github.com/golang/protobuf/proto && \
     go get github.com/golang/protobuf/protoc-gen-go && \
     go get google.golang.org/grpc && \

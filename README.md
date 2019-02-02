@@ -4,6 +4,7 @@
 2. Install GoLand https://www.jetbrains.com/go/nextversion/
 3. Install Docker https://docs.docker.com/install/
 4. Istall protoc https://github.com/google/protobuf/releases
+    - `go get -u github.com/segmentio/ksuid`
     - `go get -u github.com/golang/protobuf/{proto,protoc-gen-go}`
     - `go get -u google.golang.org/grpc`
     - `go get -u golang.org/x/net/context`
