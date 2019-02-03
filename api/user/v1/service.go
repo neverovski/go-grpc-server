@@ -1,4 +1,4 @@
-package user
+package v1
 
 import (
 	"context"
@@ -15,8 +15,8 @@ type User struct {
 	ID        string    `json:"id"`
 	Username  string    `json:"username"`
 	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 func (s *userService) PostUser(ctx context.Context, username, email string) (*User, error) {

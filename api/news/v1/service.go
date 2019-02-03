@@ -1,4 +1,4 @@
-package news
+package v1
 
 import (
 	"context"
@@ -18,10 +18,10 @@ type News struct {
 	Description string    `json:"description"`
 	H1          string    `json:"h1"`
 	Text        string    `json:"text"`
-	UserID      string    `json:"userID"`
+	UserID      string    `json:"user_id"`
 	Published   bool      `json:"published"`
-	CreatedAt   time.Time `json:"createdAt"`
-	UpdatedAt   time.Time `json:"updatedAt"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 func (s *newsService) PostNews(ctx context.Context, title, description, h1, text, userID string, published bool) (*News, error) {
