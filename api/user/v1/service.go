@@ -1,9 +1,10 @@
-package v1
+package user
 
 import (
 	"context"
-	"github.com/segmentio/ksuid"
 	"time"
+
+	"github.com/segmentio/ksuid"
 )
 
 type Service interface {

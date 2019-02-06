@@ -1,5 +1,5 @@
 syntax = "proto3";
-package user.v1;
+package pb;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
