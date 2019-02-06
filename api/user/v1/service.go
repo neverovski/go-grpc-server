@@ -20,8 +20,16 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+type userService struct {
+	repository Repository
+}
+
+func NewService(r Repository) Service {
+	return &userService{r}
+}
+
 func (s *userService) PostUser(ctx context.Context, username, email string) (*User, error) {
-	n := &User{
+	u := &User{
 		ID:        ksuid.New().String(),
 		Username:  username,
 		Email:     email,
@@ -29,9 +37,13 @@ func (s *userService) PostUser(ctx context.Context, username, email string) (*Us
 		UpdatedAt: time.Now().UTC(),
 	}
 
-	return n, nil
+	if err := s.repository.PutUser(ctx, *u); err != nil {
+		return nil, err
+	}
+
+	return u, nil
 }
 
 func (s *userService) GetUser(ctx context.Context, id string) (*User, error) {
-	return n, nil
+	return s.repository.GetUser(ctx, id)
 }

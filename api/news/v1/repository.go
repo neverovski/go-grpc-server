@@ -9,6 +9,7 @@ import (
 
 type Repository interface {
 	Close()
+	Ping() error
 	PutNews(ctx context.Context, n News) error
 	GetNews(ctx context.Context, id string) (*News, error)
 	GetNewsForUser(ctx context.Context, userID string) ([]News, error)
