@@ -5,8 +5,11 @@ ifndef $(GOPATH)
     export GOPATH
 endif
 
-get:
-	echo $(GOPATH)
+get: protos
+
+protos: \
+	protos_news \
+ 	protos_user
 
 protos_news:
 	echo "Start build proto news app"
@@ -14,19 +17,20 @@ protos_news:
 		-I${GOPATH}/src \
 		-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 		--go_out=plugins=grpc:. \
-		api/news/v1/pb/news.proto
+		api/news/pb/news.proto
 	protoc -I/usr/local/include -I. \
     	-I${GOPATH}/src \
     	-I${GOPATH}/src/github.com/googleapis/googleapis/ \
     	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
     	--plugin=protoc-gen-grpc-gateway=${GOPATH}/bin/protoc-gen-grpc-gateway \
     	--grpc-gateway_out=logtostderr=true:. \
-    	api/news/v1/pb/news.proto
+    	api/news/pb/news.proto
 	protoc -I/usr/local/include -I. \
     	-I${GOPATH}/src \
     	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+    	--plugin=protoc-gen-swagger=${GOPATH}/bin/protoc-gen-swagger \
     	--swagger_out=logtostderr=true:. \
-    	api/news/v1/pb/news.proto
+    	api/news/pb/news.proto
 	echo "End build proto news app"
 
 protos_user:
@@ -35,15 +39,18 @@ protos_user:
 		-I${GOPATH}/src \
 		-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 		--go_out=plugins=grpc:. \
-		api/user/v1/pb/user.proto
+		api/user/pb/user.proto
+	protoc -I/usr/local/include -I. \
+    	-I${GOPATH}/src \
+        -I${GOPATH}/src/github.com/googleapis/googleapis/ \
+        -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+        --plugin=protoc-gen-grpc-gateway=${GOPATH}/bin/protoc-gen-grpc-gateway \
+        --grpc-gateway_out=logtostderr=true:. \
+    	api/user/pb/user.proto
 	protoc -I/usr/local/include -I. \
     	-I${GOPATH}/src \
     	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-    	--grpc-gateway_out=logtostderr=true:. \
-    	api/user/v1/pb/user.proto
-	protoc -I/usr/local/include -I. \
-    	-I${GOPATH}/src \
-    	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+    	--plugin=protoc-gen-swagger=${GOPATH}/bin/protoc-gen-swagger \
     	--swagger_out=logtostderr=true:. \
-    	api/user/v1/pb/user.proto
+    	api/user/pb/user.proto
 	echo "End build proto user app"

@@ -8,8 +8,10 @@ import (
 )
 
 type Service interface {
-	PostUser(ctx context.Context, username, email string) (*User, error)
 	GetUser(ctx context.Context, id string) (*User, error)
+	PostUser(ctx context.Context, username, email string) (*User, error)
+	UpdateUser(ctx context.Context, username, email string) (*User, error)
+	DeleteUser(ctx context.Context, id string) error
 }
 
 type User struct {
@@ -46,4 +48,17 @@ func (s *userService) PostUser(ctx context.Context, username, email string) (*Us
 
 func (s *userService) GetUser(ctx context.Context, id string) (*User, error) {
 	return s.repository.GetUser(ctx, id)
+}
+
+func (s *userService) UpdateUser(ctx context.Context, username, email string) (*User, error) {
+	u := &User{
+		ID:        ksuid.New().String(),
+		Username:  username,
+		Email:     email,
+		UpdatedAt: time.Now().UTC(),
+	}
+}
+
+func (s *userService) DeleteUser(ctx context.Context, id string) error {
+
 }

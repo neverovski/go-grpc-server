@@ -1,0 +1,209 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/news/pb/news.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/news": {
+      "post": {
+        "operationId": "PostNews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbPostNewsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbNews"
+            }
+          }
+        ],
+        "tags": [
+          "NewsService"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateNews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbUpdateNewsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbNews"
+            }
+          }
+        ],
+        "tags": [
+          "NewsService"
+        ]
+      }
+    },
+    "/api/v1/news/user/{user_id}": {
+      "get": {
+        "operationId": "GetNewsForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetNewsForUserResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "NewsService"
+        ]
+      }
+    },
+    "/api/v1/news/{id}": {
+      "get": {
+        "operationId": "GetNews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetNewsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "NewsService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteNews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbDeleteNewsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "NewsService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "pbDeleteNewsResponse": {
+      "type": "object"
+    },
+    "pbGetNewsForUserResponse": {
+      "type": "object",
+      "properties": {
+        "news": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pbNews"
+          }
+        }
+      }
+    },
+    "pbGetNewsResponse": {
+      "type": "object",
+      "properties": {
+        "news": {
+          "$ref": "#/definitions/pbNews"
+        }
+      }
+    },
+    "pbNews": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "h1": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "pbPostNewsResponse": {
+      "type": "object",
+      "properties": {
+        "news": {
+          "$ref": "#/definitions/pbNews"
+        }
+      }
+    },
+    "pbUpdateNewsResponse": {
+      "type": "object"
+    }
+  }
+}

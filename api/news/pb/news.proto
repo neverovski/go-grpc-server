@@ -51,12 +51,7 @@ message News {
 }
 
 message PostNewsRequest {
-	string title = 1;
-	string description = 2;
-	string h1 = 3;
-	string text = 4;
-	bool published = 5;
-	string user_id = 6;
+	News news = 1;
 }
 
 message PostNewsResponse {

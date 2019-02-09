@@ -5,12 +5,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 service UserService {
-    rpc PostUser(PostUserRequest) returns (PostUserResponse) {
-        option (google.api.http) ={
-			post: "/api/v1/user"
-			body: "user"
-		};
-    }
 
     rpc GetUser(GetUserRequest) returns (GetUserResponse) {
         option(google.api.http) = {
@@ -18,9 +12,10 @@ service UserService {
 		};
     }
 
-    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+    rpc PostUser(PostUserRequest) returns (PostUserResponse) {
         option (google.api.http) ={
-			delete: "/api/v1/user/{id}"
+			post: "/api/v1/user"
+			body: "user"
 		};
     }
 
@@ -28,6 +23,12 @@ service UserService {
         option (google.api.http) ={
 			put: "/api/v1/user"
 			body: "user"
+		};
+    }
+
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+        option (google.api.http) ={
+			delete: "/api/v1/user/{id}"
 		};
     }
 }
@@ -40,15 +41,6 @@ message User {
     google.protobuf.Timestamp updated_at = 5;
 }
 
-message PostUserRequest {
-    string username = 1;
-    string email = 2;
-}
-
-message PostUserResponse {
-    User user = 1;
-}
-
 message GetUserRequest {
     string id = 1;
 }
@@ -57,14 +49,24 @@ message GetUserResponse {
     User user = 1;
 }
 
-message DeleteUserRequest {
-    string id = 1;
+message PostUserRequest {
+    User user = 1;
 }
 
-message DeleteUserResponse {}
+message PostUserResponse {
+    User user = 1;
+}
 
 message UpdateUserRequest {
     User user = 1;
 }
 
-message UpdateUserResponse {}
+message UpdateUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse {}
