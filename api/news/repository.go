@@ -10,9 +10,11 @@ import (
 type Repository interface {
 	Close()
 	Ping() error
-	PutNews(ctx context.Context, n News) error
 	GetNews(ctx context.Context, id string) (*News, error)
 	GetNewsForUser(ctx context.Context, userID string) ([]News, error)
+	PostNews(ctx context.Context, n News) error
+	PutNews(ctx context.Context, n News) error
+	DeleteNews(ctx context.Context, id string) error
 }
 
 type postgresRepository struct {
@@ -37,24 +39,6 @@ func (r *postgresRepository) Close() {
 
 func (r *postgresRepository) Ping() error {
 	return r.db.Ping()
-}
-
-func (r *postgresRepository) PutNews(ctx context.Context, n News) error {
-	// Insert news
-	_, err := r.db.ExecContext(
-		ctx,
-		"INSERT INTO news(id, title, description, h1, text, user_id, published, created_at, updated_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-		n.ID,
-		n.Title,
-		n.Description,
-		n.H1,
-		n.Text,
-		n.UserID,
-		n.Published,
-		n.CreatedAt,
-		n.UpdatedAt,
-	)
-	return err
 }
 
 func (r *postgresRepository) GetNews(ctx context.Context, id string) (*News, error) {
@@ -100,4 +84,34 @@ func (r *postgresRepository) GetNewsForUser(ctx context.Context, userID string) 
 		return nil, err
 	}
 	return news, nil
+}
+
+func (r *postgresRepository) PostNews(ctx context.Context, n News) error {
+	// Insert news
+	_, err := r.db.ExecContext(
+		ctx,
+		"INSERT INTO news(id, title, description, h1, text, user_id, published, created_at, updated_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+		n.ID,
+		n.Title,
+		n.Description,
+		n.H1,
+		n.Text,
+		n.UserID,
+		n.Published,
+		n.CreatedAt,
+		n.UpdatedAt,
+	)
+	return err
+}
+
+func (r *postgresRepository) PutNews(ctx context.Context, n News) error {
+	return nil
+}
+
+func (r *postgresRepository) DeleteNews(ctx context.Context, id string) error {
+	_, err := r.db.Exec(
+		"DELETE FROM news WHERE id = ?",
+		id,
+	)
+	return err
 }

@@ -15,14 +15,14 @@ service UserService {
     rpc PostUser(PostUserRequest) returns (PostUserResponse) {
         option (google.api.http) ={
 			post: "/api/v1/user"
-			body: "user"
+			body: "*"
 		};
     }
 
     rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
         option (google.api.http) ={
 			put: "/api/v1/user"
-			body: "user"
+			body: "*"
 		};
     }
 
@@ -50,7 +50,8 @@ message GetUserResponse {
 }
 
 message PostUserRequest {
-    User user = 1;
+    string username = 1;
+    string email = 2;
 }
 
 message PostUserResponse {
@@ -58,7 +59,8 @@ message PostUserResponse {
 }
 
 message UpdateUserRequest {
-    User user = 1;
+    string username = 1;
+    string email = 2;
 }
 
 message UpdateUserResponse {

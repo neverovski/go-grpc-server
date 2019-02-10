@@ -9,16 +9,16 @@ It is generated from these files:
 
 It has these top-level messages:
 	News
-	PostNewsRequest
-	PostNewsResponse
 	GetNewsRequest
 	GetNewsResponse
 	GetNewsForUserRequest
 	GetNewsForUserResponse
-	DeleteNewsRequest
-	DeleteNewsResponse
+	PostNewsRequest
+	PostNewsResponse
 	UpdateNewsRequest
 	UpdateNewsResponse
+	DeleteNewsRequest
+	DeleteNewsResponse
 */
 package pb
 
@@ -124,38 +124,6 @@ func (m *News) GetUpdatedAt() *google_protobuf1.Timestamp {
 	return nil
 }
 
-type PostNewsRequest struct {
-	News *News `protobuf:"bytes,1,opt,name=news" json:"news,omitempty"`
-}
-
-func (m *PostNewsRequest) Reset()                    { *m = PostNewsRequest{} }
-func (m *PostNewsRequest) String() string            { return proto.CompactTextString(m) }
-func (*PostNewsRequest) ProtoMessage()               {}
-func (*PostNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
-
-func (m *PostNewsRequest) GetNews() *News {
-	if m != nil {
-		return m.News
-	}
-	return nil
-}
-
-type PostNewsResponse struct {
-	News *News `protobuf:"bytes,1,opt,name=news" json:"news,omitempty"`
-}
-
-func (m *PostNewsResponse) Reset()                    { *m = PostNewsResponse{} }
-func (m *PostNewsResponse) String() string            { return proto.CompactTextString(m) }
-func (*PostNewsResponse) ProtoMessage()               {}
-func (*PostNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
-
-func (m *PostNewsResponse) GetNews() *News {
-	if m != nil {
-		return m.News
-	}
-	return nil
-}
-
 type GetNewsRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
 }
@@ -163,7 +131,7 @@ type GetNewsRequest struct {
 func (m *GetNewsRequest) Reset()                    { *m = GetNewsRequest{} }
 func (m *GetNewsRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetNewsRequest) ProtoMessage()               {}
-func (*GetNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (*GetNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *GetNewsRequest) GetId() string {
 	if m != nil {
@@ -179,7 +147,7 @@ type GetNewsResponse struct {
 func (m *GetNewsResponse) Reset()                    { *m = GetNewsResponse{} }
 func (m *GetNewsResponse) String() string            { return proto.CompactTextString(m) }
 func (*GetNewsResponse) ProtoMessage()               {}
-func (*GetNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+func (*GetNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 func (m *GetNewsResponse) GetNews() *News {
 	if m != nil {
@@ -195,7 +163,7 @@ type GetNewsForUserRequest struct {
 func (m *GetNewsForUserRequest) Reset()                    { *m = GetNewsForUserRequest{} }
 func (m *GetNewsForUserRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetNewsForUserRequest) ProtoMessage()               {}
-func (*GetNewsForUserRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+func (*GetNewsForUserRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *GetNewsForUserRequest) GetUserId() string {
 	if m != nil {
@@ -211,9 +179,137 @@ type GetNewsForUserResponse struct {
 func (m *GetNewsForUserResponse) Reset()                    { *m = GetNewsForUserResponse{} }
 func (m *GetNewsForUserResponse) String() string            { return proto.CompactTextString(m) }
 func (*GetNewsForUserResponse) ProtoMessage()               {}
-func (*GetNewsForUserResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+func (*GetNewsForUserResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 func (m *GetNewsForUserResponse) GetNews() []*News {
+	if m != nil {
+		return m.News
+	}
+	return nil
+}
+
+type PostNewsRequest struct {
+	Title       string `protobuf:"bytes,1,opt,name=title" json:"title,omitempty"`
+	Description string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
+	H1          string `protobuf:"bytes,3,opt,name=h1" json:"h1,omitempty"`
+	Text        string `protobuf:"bytes,4,opt,name=text" json:"text,omitempty"`
+	Published   bool   `protobuf:"varint,5,opt,name=published" json:"published,omitempty"`
+}
+
+func (m *PostNewsRequest) Reset()                    { *m = PostNewsRequest{} }
+func (m *PostNewsRequest) String() string            { return proto.CompactTextString(m) }
+func (*PostNewsRequest) ProtoMessage()               {}
+func (*PostNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+
+func (m *PostNewsRequest) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *PostNewsRequest) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *PostNewsRequest) GetH1() string {
+	if m != nil {
+		return m.H1
+	}
+	return ""
+}
+
+func (m *PostNewsRequest) GetText() string {
+	if m != nil {
+		return m.Text
+	}
+	return ""
+}
+
+func (m *PostNewsRequest) GetPublished() bool {
+	if m != nil {
+		return m.Published
+	}
+	return false
+}
+
+type PostNewsResponse struct {
+	News *News `protobuf:"bytes,1,opt,name=news" json:"news,omitempty"`
+}
+
+func (m *PostNewsResponse) Reset()                    { *m = PostNewsResponse{} }
+func (m *PostNewsResponse) String() string            { return proto.CompactTextString(m) }
+func (*PostNewsResponse) ProtoMessage()               {}
+func (*PostNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+
+func (m *PostNewsResponse) GetNews() *News {
+	if m != nil {
+		return m.News
+	}
+	return nil
+}
+
+type UpdateNewsRequest struct {
+	Title       string `protobuf:"bytes,1,opt,name=title" json:"title,omitempty"`
+	Description string `protobuf:"bytes,2,opt,name=description" json:"description,omitempty"`
+	H1          string `protobuf:"bytes,3,opt,name=h1" json:"h1,omitempty"`
+	Text        string `protobuf:"bytes,4,opt,name=text" json:"text,omitempty"`
+	Published   bool   `protobuf:"varint,5,opt,name=published" json:"published,omitempty"`
+}
+
+func (m *UpdateNewsRequest) Reset()                    { *m = UpdateNewsRequest{} }
+func (m *UpdateNewsRequest) String() string            { return proto.CompactTextString(m) }
+func (*UpdateNewsRequest) ProtoMessage()               {}
+func (*UpdateNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+
+func (m *UpdateNewsRequest) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *UpdateNewsRequest) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *UpdateNewsRequest) GetH1() string {
+	if m != nil {
+		return m.H1
+	}
+	return ""
+}
+
+func (m *UpdateNewsRequest) GetText() string {
+	if m != nil {
+		return m.Text
+	}
+	return ""
+}
+
+func (m *UpdateNewsRequest) GetPublished() bool {
+	if m != nil {
+		return m.Published
+	}
+	return false
+}
+
+type UpdateNewsResponse struct {
+	News *News `protobuf:"bytes,1,opt,name=news" json:"news,omitempty"`
+}
+
+func (m *UpdateNewsResponse) Reset()                    { *m = UpdateNewsResponse{} }
+func (m *UpdateNewsResponse) String() string            { return proto.CompactTextString(m) }
+func (*UpdateNewsResponse) ProtoMessage()               {}
+func (*UpdateNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+
+func (m *UpdateNewsResponse) GetNews() *News {
 	if m != nil {
 		return m.News
 	}
@@ -227,7 +323,7 @@ type DeleteNewsRequest struct {
 func (m *DeleteNewsRequest) Reset()                    { *m = DeleteNewsRequest{} }
 func (m *DeleteNewsRequest) String() string            { return proto.CompactTextString(m) }
 func (*DeleteNewsRequest) ProtoMessage()               {}
-func (*DeleteNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+func (*DeleteNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *DeleteNewsRequest) GetId() string {
 	if m != nil {
@@ -242,44 +338,20 @@ type DeleteNewsResponse struct {
 func (m *DeleteNewsResponse) Reset()                    { *m = DeleteNewsResponse{} }
 func (m *DeleteNewsResponse) String() string            { return proto.CompactTextString(m) }
 func (*DeleteNewsResponse) ProtoMessage()               {}
-func (*DeleteNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
-
-type UpdateNewsRequest struct {
-	News *News `protobuf:"bytes,1,opt,name=news" json:"news,omitempty"`
-}
-
-func (m *UpdateNewsRequest) Reset()                    { *m = UpdateNewsRequest{} }
-func (m *UpdateNewsRequest) String() string            { return proto.CompactTextString(m) }
-func (*UpdateNewsRequest) ProtoMessage()               {}
-func (*UpdateNewsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
-
-func (m *UpdateNewsRequest) GetNews() *News {
-	if m != nil {
-		return m.News
-	}
-	return nil
-}
-
-type UpdateNewsResponse struct {
-}
-
-func (m *UpdateNewsResponse) Reset()                    { *m = UpdateNewsResponse{} }
-func (m *UpdateNewsResponse) String() string            { return proto.CompactTextString(m) }
-func (*UpdateNewsResponse) ProtoMessage()               {}
-func (*UpdateNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+func (*DeleteNewsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func init() {
 	proto.RegisterType((*News)(nil), "pb.News")
-	proto.RegisterType((*PostNewsRequest)(nil), "pb.PostNewsRequest")
-	proto.RegisterType((*PostNewsResponse)(nil), "pb.PostNewsResponse")
 	proto.RegisterType((*GetNewsRequest)(nil), "pb.GetNewsRequest")
 	proto.RegisterType((*GetNewsResponse)(nil), "pb.GetNewsResponse")
 	proto.RegisterType((*GetNewsForUserRequest)(nil), "pb.GetNewsForUserRequest")
 	proto.RegisterType((*GetNewsForUserResponse)(nil), "pb.GetNewsForUserResponse")
-	proto.RegisterType((*DeleteNewsRequest)(nil), "pb.DeleteNewsRequest")
-	proto.RegisterType((*DeleteNewsResponse)(nil), "pb.DeleteNewsResponse")
+	proto.RegisterType((*PostNewsRequest)(nil), "pb.PostNewsRequest")
+	proto.RegisterType((*PostNewsResponse)(nil), "pb.PostNewsResponse")
 	proto.RegisterType((*UpdateNewsRequest)(nil), "pb.UpdateNewsRequest")
 	proto.RegisterType((*UpdateNewsResponse)(nil), "pb.UpdateNewsResponse")
+	proto.RegisterType((*DeleteNewsRequest)(nil), "pb.DeleteNewsRequest")
+	proto.RegisterType((*DeleteNewsResponse)(nil), "pb.DeleteNewsResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -293,11 +365,11 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for NewsService service
 
 type NewsServiceClient interface {
-	PostNews(ctx context.Context, in *PostNewsRequest, opts ...grpc.CallOption) (*PostNewsResponse, error)
 	GetNews(ctx context.Context, in *GetNewsRequest, opts ...grpc.CallOption) (*GetNewsResponse, error)
 	GetNewsForUser(ctx context.Context, in *GetNewsForUserRequest, opts ...grpc.CallOption) (*GetNewsForUserResponse, error)
-	DeleteNews(ctx context.Context, in *DeleteNewsRequest, opts ...grpc.CallOption) (*DeleteNewsResponse, error)
+	PostNews(ctx context.Context, in *PostNewsRequest, opts ...grpc.CallOption) (*PostNewsResponse, error)
 	UpdateNews(ctx context.Context, in *UpdateNewsRequest, opts ...grpc.CallOption) (*UpdateNewsResponse, error)
+	DeleteNews(ctx context.Context, in *DeleteNewsRequest, opts ...grpc.CallOption) (*DeleteNewsResponse, error)
 }
 
 type newsServiceClient struct {
@@ -306,15 +378,6 @@ type newsServiceClient struct {
 
 func NewNewsServiceClient(cc *grpc.ClientConn) NewsServiceClient {
 	return &newsServiceClient{cc}
-}
-
-func (c *newsServiceClient) PostNews(ctx context.Context, in *PostNewsRequest, opts ...grpc.CallOption) (*PostNewsResponse, error) {
-	out := new(PostNewsResponse)
-	err := grpc.Invoke(ctx, "/pb.NewsService/PostNews", in, out, c.cc, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *newsServiceClient) GetNews(ctx context.Context, in *GetNewsRequest, opts ...grpc.CallOption) (*GetNewsResponse, error) {
@@ -335,9 +398,9 @@ func (c *newsServiceClient) GetNewsForUser(ctx context.Context, in *GetNewsForUs
 	return out, nil
 }
 
-func (c *newsServiceClient) DeleteNews(ctx context.Context, in *DeleteNewsRequest, opts ...grpc.CallOption) (*DeleteNewsResponse, error) {
-	out := new(DeleteNewsResponse)
-	err := grpc.Invoke(ctx, "/pb.NewsService/DeleteNews", in, out, c.cc, opts...)
+func (c *newsServiceClient) PostNews(ctx context.Context, in *PostNewsRequest, opts ...grpc.CallOption) (*PostNewsResponse, error) {
+	out := new(PostNewsResponse)
+	err := grpc.Invoke(ctx, "/pb.NewsService/PostNews", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -353,36 +416,27 @@ func (c *newsServiceClient) UpdateNews(ctx context.Context, in *UpdateNewsReques
 	return out, nil
 }
 
+func (c *newsServiceClient) DeleteNews(ctx context.Context, in *DeleteNewsRequest, opts ...grpc.CallOption) (*DeleteNewsResponse, error) {
+	out := new(DeleteNewsResponse)
+	err := grpc.Invoke(ctx, "/pb.NewsService/DeleteNews", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for NewsService service
 
 type NewsServiceServer interface {
-	PostNews(context.Context, *PostNewsRequest) (*PostNewsResponse, error)
 	GetNews(context.Context, *GetNewsRequest) (*GetNewsResponse, error)
 	GetNewsForUser(context.Context, *GetNewsForUserRequest) (*GetNewsForUserResponse, error)
-	DeleteNews(context.Context, *DeleteNewsRequest) (*DeleteNewsResponse, error)
+	PostNews(context.Context, *PostNewsRequest) (*PostNewsResponse, error)
 	UpdateNews(context.Context, *UpdateNewsRequest) (*UpdateNewsResponse, error)
+	DeleteNews(context.Context, *DeleteNewsRequest) (*DeleteNewsResponse, error)
 }
 
 func RegisterNewsServiceServer(s *grpc.Server, srv NewsServiceServer) {
 	s.RegisterService(&_NewsService_serviceDesc, srv)
-}
-
-func _NewsService_PostNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PostNewsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NewsServiceServer).PostNews(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.NewsService/PostNews",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewsServiceServer).PostNews(ctx, req.(*PostNewsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _NewsService_GetNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -421,20 +475,20 @@ func _NewsService_GetNewsForUser_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _NewsService_DeleteNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteNewsRequest)
+func _NewsService_PostNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostNewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NewsServiceServer).DeleteNews(ctx, in)
+		return srv.(NewsServiceServer).PostNews(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.NewsService/DeleteNews",
+		FullMethod: "/pb.NewsService/PostNews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewsServiceServer).DeleteNews(ctx, req.(*DeleteNewsRequest))
+		return srv.(NewsServiceServer).PostNews(ctx, req.(*PostNewsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -457,14 +511,28 @@ func _NewsService_UpdateNews_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsService_DeleteNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteNewsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServiceServer).DeleteNews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.NewsService/DeleteNews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServiceServer).DeleteNews(ctx, req.(*DeleteNewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _NewsService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.NewsService",
 	HandlerType: (*NewsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "PostNews",
-			Handler:    _NewsService_PostNews_Handler,
-		},
 		{
 			MethodName: "GetNews",
 			Handler:    _NewsService_GetNews_Handler,
@@ -474,12 +542,16 @@ var _NewsService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _NewsService_GetNewsForUser_Handler,
 		},
 		{
-			MethodName: "DeleteNews",
-			Handler:    _NewsService_DeleteNews_Handler,
+			MethodName: "PostNews",
+			Handler:    _NewsService_PostNews_Handler,
 		},
 		{
 			MethodName: "UpdateNews",
 			Handler:    _NewsService_UpdateNews_Handler,
+		},
+		{
+			MethodName: "DeleteNews",
+			Handler:    _NewsService_DeleteNews_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -489,39 +561,41 @@ var _NewsService_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("api/news/pb/news.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 538 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0x4d, 0x6f, 0xd3, 0x40,
-	0x10, 0x55, 0x9c, 0x34, 0x1f, 0x13, 0x54, 0xc8, 0x24, 0x0d, 0xee, 0x52, 0x44, 0xe4, 0x5e, 0x22,
-	0x0e, 0x76, 0x13, 0x24, 0x24, 0xb8, 0x55, 0x42, 0x20, 0x0e, 0x20, 0x08, 0x14, 0x8e, 0x95, 0x1d,
-	0x0f, 0xcd, 0x4a, 0x69, 0xbc, 0x78, 0x37, 0x2d, 0x52, 0xd5, 0x0b, 0x7f, 0x81, 0x3b, 0x3f, 0x89,
-	0x0b, 0x7f, 0x81, 0x1f, 0x82, 0x76, 0xbd, 0x4e, 0xe2, 0x24, 0x6a, 0x7b, 0xb2, 0xf7, 0xed, 0xbc,
-	0x37, 0x33, 0xef, 0x69, 0xa1, 0x1b, 0x0a, 0x1e, 0xcc, 0xe8, 0x52, 0x06, 0x22, 0x32, 0x5f, 0x5f,
-	0xa4, 0x89, 0x4a, 0xd0, 0x11, 0x11, 0x3b, 0x38, 0x4b, 0x92, 0xb3, 0x29, 0x05, 0xba, 0x24, 0x9c,
-	0xcd, 0x12, 0x15, 0x2a, 0x9e, 0xcc, 0x6c, 0x05, 0x7b, 0x62, 0x6f, 0xcd, 0x29, 0x9a, 0x7f, 0x0b,
-	0x14, 0x3f, 0x27, 0xa9, 0xc2, 0x73, 0x91, 0x15, 0x78, 0xbf, 0x1d, 0xa8, 0xbc, 0xa7, 0x4b, 0x89,
-	0xbb, 0xe0, 0xf0, 0xd8, 0x2d, 0xf5, 0x4a, 0xfd, 0xc6, 0xc8, 0xe1, 0x31, 0x76, 0x60, 0x47, 0x71,
-	0x35, 0x25, 0xd7, 0x31, 0x50, 0x76, 0xc0, 0x1e, 0x34, 0x63, 0x92, 0xe3, 0x94, 0x0b, 0xdd, 0xc5,
-	0x2d, 0x9b, 0xbb, 0x55, 0x48, 0xeb, 0x4c, 0x06, 0x6e, 0x25, 0xd3, 0x99, 0x0c, 0x10, 0xa1, 0xa2,
-	0xe8, 0x87, 0x72, 0x77, 0x0c, 0x62, 0xfe, 0xf1, 0x00, 0x1a, 0x62, 0x1e, 0x4d, 0xb9, 0x9c, 0x50,
-	0xec, 0x56, 0x7b, 0xa5, 0x7e, 0x7d, 0xb4, 0x04, 0xb0, 0x0b, 0xd5, 0xb9, 0xa4, 0xf4, 0x6d, 0xec,
-	0xd6, 0x0c, 0xc7, 0x9e, 0xf0, 0x05, 0xc0, 0x38, 0xa5, 0x50, 0x51, 0x7c, 0x1a, 0x2a, 0xb7, 0xde,
-	0x2b, 0xf5, 0x9b, 0x43, 0xe6, 0x67, 0x0b, 0xfa, 0xf9, 0x82, 0xfe, 0xe7, 0x7c, 0xc1, 0x51, 0xc3,
-	0x56, 0x1f, 0x2b, 0x4d, 0x9d, 0x8b, 0x38, 0xa7, 0x36, 0x6e, 0xa7, 0xda, 0xea, 0x63, 0xe5, 0x05,
-	0x70, 0xff, 0x43, 0x22, 0x95, 0xf6, 0x68, 0x44, 0xdf, 0xe7, 0x24, 0xf5, 0xf8, 0x15, 0x1d, 0x82,
-	0x31, 0xab, 0x39, 0xac, 0xfb, 0x22, 0xf2, 0xcd, 0xb5, 0x41, 0xbd, 0x23, 0x78, 0xb0, 0x24, 0x48,
-	0x91, 0xcc, 0x24, 0xdd, 0xc2, 0xe8, 0xc1, 0xee, 0x1b, 0x2a, 0x74, 0x58, 0x0b, 0x43, 0x0f, 0xb1,
-	0xa8, 0xb8, 0x93, 0xe4, 0x11, 0xec, 0x59, 0xc2, 0xeb, 0x24, 0x3d, 0x91, 0x94, 0xe6, 0xca, 0x0f,
-	0xa1, 0xa6, 0xed, 0x3c, 0x5d, 0xc8, 0x5b, 0x77, 0xbd, 0xe7, 0xd0, 0x5d, 0x67, 0x6c, 0x74, 0x2a,
-	0x6f, 0xe9, 0x74, 0x08, 0xad, 0x57, 0x34, 0x25, 0x45, 0x37, 0xcd, 0xdf, 0x01, 0x5c, 0x2d, 0xca,
-	0x84, 0xbd, 0x01, 0xb4, 0x4e, 0x8c, 0xcf, 0x77, 0x37, 0xb7, 0x03, 0xb8, 0x4a, 0xc9, 0x84, 0x86,
-	0x7f, 0xca, 0xd0, 0xd4, 0xc0, 0x27, 0x4a, 0x2f, 0xf8, 0x98, 0xf0, 0x23, 0xd4, 0xf3, 0x08, 0xb0,
-	0xad, 0x15, 0xd6, 0x12, 0x64, 0x9d, 0x22, 0x68, 0xe7, 0x61, 0x3f, 0xff, 0xfe, 0xfb, 0xe5, 0x74,
-	0xbc, 0x7b, 0xe6, 0x31, 0x5d, 0x0c, 0xcc, 0x53, 0x7b, 0x69, 0x1a, 0xe3, 0x3b, 0xa8, 0x59, 0x7b,
-	0x10, 0x35, 0xb9, 0x18, 0x18, 0x6b, 0x17, 0x30, 0xab, 0xb7, 0x6f, 0xf4, 0xda, 0xd8, 0x5a, 0xd5,
-	0x0b, 0xae, 0x78, 0x7c, 0x8d, 0xd3, 0x45, 0xe4, 0xd6, 0x6d, 0xdc, 0x5f, 0x51, 0x28, 0x66, 0xc6,
-	0xd8, 0xb6, 0x2b, 0xdb, 0xe3, 0xd0, 0xf4, 0x78, 0x8c, 0x8f, 0x0a, 0x3d, 0x74, 0xa6, 0xc1, 0x95,
-	0x0d, 0xfa, 0x1a, 0xbf, 0x00, 0x2c, 0xed, 0xc7, 0x3d, 0x2d, 0xb7, 0x91, 0x19, 0xeb, 0xae, 0xc3,
-	0xc5, 0x2d, 0x9e, 0x6e, 0xd9, 0xe2, 0x2b, 0xc0, 0x32, 0x8d, 0x4c, 0x77, 0x23, 0xd0, 0x4c, 0x77,
-	0x33, 0xb4, 0xdc, 0x6d, 0xb6, 0xc5, 0xed, 0xa8, 0x6a, 0xde, 0xe4, 0xb3, 0xff, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x98, 0xeb, 0x85, 0x9e, 0xf9, 0x04, 0x00, 0x00,
+	// 565 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x54, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0x95, 0x9d, 0x34, 0x1f, 0x13, 0xd4, 0x92, 0x69, 0x9a, 0xba, 0x26, 0x88, 0xc8, 0xbd, 0x44,
+	0x3d, 0xd8, 0x4d, 0x90, 0x90, 0xe0, 0x56, 0x09, 0x81, 0x38, 0x50, 0xa1, 0xd0, 0x72, 0xad, 0xec,
+	0x78, 0x68, 0x2c, 0xa5, 0xf1, 0xe2, 0xdd, 0xb4, 0x48, 0x55, 0x2f, 0x5c, 0x11, 0x27, 0xee, 0xfc,
+	0x1e, 0xee, 0xfc, 0x05, 0x7e, 0x08, 0xda, 0xf5, 0x3a, 0x89, 0xed, 0x16, 0x7a, 0xe4, 0x64, 0xef,
+	0xdb, 0x99, 0x37, 0x1f, 0xef, 0x69, 0xa1, 0xeb, 0xb3, 0xc8, 0x9b, 0xd3, 0x15, 0xf7, 0x58, 0xa0,
+	0xbe, 0x2e, 0x4b, 0x62, 0x11, 0xa3, 0xc9, 0x02, 0xbb, 0x77, 0x1e, 0xc7, 0xe7, 0x33, 0xf2, 0x64,
+	0x88, 0x3f, 0x9f, 0xc7, 0xc2, 0x17, 0x51, 0x3c, 0xd7, 0x11, 0xf6, 0x13, 0x7d, 0xab, 0x4e, 0xc1,
+	0xe2, 0xa3, 0x27, 0xa2, 0x0b, 0xe2, 0xc2, 0xbf, 0x60, 0x69, 0x80, 0xf3, 0xc3, 0x84, 0xea, 0x31,
+	0x5d, 0x71, 0xdc, 0x04, 0x33, 0x0a, 0x2d, 0xa3, 0x6f, 0x0c, 0x9a, 0x63, 0x33, 0x0a, 0xb1, 0x03,
+	0x1b, 0x22, 0x12, 0x33, 0xb2, 0x4c, 0x05, 0xa5, 0x07, 0xec, 0x43, 0x2b, 0x24, 0x3e, 0x49, 0x22,
+	0x26, 0xab, 0x58, 0x15, 0x75, 0xb7, 0x0e, 0x49, 0x9e, 0xe9, 0xd0, 0xaa, 0xa6, 0x3c, 0xd3, 0x21,
+	0x22, 0x54, 0x05, 0x7d, 0x16, 0xd6, 0x86, 0x42, 0xd4, 0x3f, 0xf6, 0xa0, 0xc9, 0x16, 0xc1, 0x2c,
+	0xe2, 0x53, 0x0a, 0xad, 0x5a, 0xdf, 0x18, 0x34, 0xc6, 0x2b, 0x00, 0xbb, 0x50, 0x5b, 0x70, 0x4a,
+	0xde, 0x84, 0x56, 0x5d, 0xe5, 0xe8, 0x13, 0x3e, 0x07, 0x98, 0x24, 0xe4, 0x0b, 0x0a, 0xcf, 0x7c,
+	0x61, 0x35, 0xfa, 0xc6, 0xa0, 0x35, 0xb2, 0xdd, 0x74, 0x40, 0x37, 0x1b, 0xd0, 0x3d, 0xc9, 0x06,
+	0x1c, 0x37, 0x75, 0xf4, 0x91, 0x90, 0xa9, 0x0b, 0x16, 0x66, 0xa9, 0xcd, 0x7f, 0xa7, 0xea, 0xe8,
+	0x23, 0xe1, 0xf4, 0x61, 0xf3, 0x35, 0x09, 0xb9, 0xa2, 0x31, 0x7d, 0x5a, 0x10, 0x17, 0xc5, 0x4d,
+	0x39, 0x1e, 0x6c, 0x2d, 0x23, 0x38, 0x8b, 0xe7, 0x9c, 0xb0, 0x07, 0x55, 0x29, 0x93, 0x0a, 0x6a,
+	0x8d, 0x1a, 0x2e, 0x0b, 0x5c, 0x75, 0xaf, 0x50, 0xe7, 0x10, 0x76, 0x74, 0xc2, 0xab, 0x38, 0x39,
+	0xe5, 0x94, 0x64, 0xcc, 0xbb, 0x50, 0x97, 0xb3, 0x9e, 0x2d, 0xe9, 0xf5, 0xe8, 0xce, 0x33, 0xe8,
+	0x16, 0x33, 0x4a, 0x95, 0x2a, 0xb7, 0x54, 0xfa, 0x6a, 0xc0, 0xd6, 0xbb, 0x98, 0xe7, 0xda, 0x5f,
+	0x0a, 0x6b, 0xfc, 0x45, 0x58, 0xf3, 0x2e, 0x61, 0x2b, 0x25, 0x61, 0xab, 0x77, 0x09, 0xbb, 0x51,
+	0x10, 0xd6, 0x39, 0x84, 0x87, 0xab, 0x66, 0xee, 0xb5, 0xa9, 0x6f, 0x06, 0xb4, 0x4f, 0x95, 0x14,
+	0xff, 0xc7, 0x04, 0x23, 0xc0, 0xf5, 0x76, 0xee, 0x35, 0xc3, 0x3e, 0xb4, 0x5f, 0xd2, 0x8c, 0xf2,
+	0x23, 0x14, 0x3d, 0xd4, 0x01, 0x5c, 0x0f, 0x4a, 0x89, 0x47, 0x3f, 0x2b, 0xd0, 0x92, 0xc0, 0x7b,
+	0x4a, 0x2e, 0xa3, 0x09, 0xe1, 0x5b, 0xa8, 0x6b, 0x1b, 0x20, 0xca, 0x2a, 0x79, 0x63, 0xda, 0xdb,
+	0x39, 0x2c, 0xe5, 0x70, 0xf6, 0xbe, 0xfc, 0xfa, 0xfd, 0xdd, 0xdc, 0xc6, 0xb6, 0x7a, 0x21, 0x2e,
+	0x87, 0xe9, 0x3b, 0x72, 0x1d, 0x85, 0x37, 0x38, 0x5b, 0x5a, 0x5b, 0xbb, 0x0a, 0xf7, 0xd6, 0x18,
+	0xf2, 0xde, 0xb4, 0xed, 0xdb, 0xae, 0x74, 0x8d, 0x7d, 0x55, 0xe3, 0x31, 0x3e, 0xca, 0xd5, 0x90,
+	0xde, 0xf5, 0xae, 0xb5, 0xa1, 0x6f, 0xf0, 0x18, 0x1a, 0x99, 0xfa, 0xa8, 0x3a, 0x2d, 0x18, 0xd3,
+	0xee, 0xe4, 0x41, 0xcd, 0xbd, 0xab, 0xb8, 0xdb, 0xce, 0x83, 0x75, 0xee, 0x17, 0xc6, 0x01, 0x9e,
+	0x00, 0xac, 0xb4, 0xc0, 0x1d, 0x99, 0x5c, 0xb2, 0x8a, 0xdd, 0x2d, 0xc2, 0x79, 0x56, 0xbb, 0xc4,
+	0xfa, 0x01, 0x60, 0x25, 0x44, 0xca, 0x5a, 0x52, 0x2f, 0x65, 0x2d, 0xeb, 0x95, 0xed, 0xfa, 0xa0,
+	0xbc, 0xeb, 0xa0, 0xa6, 0x5e, 0x99, 0xa7, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xc5, 0xc8, 0xdc,
+	0x39, 0xcb, 0x05, 0x00, 0x00,
 }

@@ -32,7 +32,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbNews"
+              "$ref": "#/definitions/pbPostNewsRequest"
             }
           }
         ],
@@ -56,7 +56,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbNews"
+              "$ref": "#/definitions/pbUpdateNewsRequest"
             }
           }
         ],
@@ -194,6 +194,27 @@
         }
       }
     },
+    "pbPostNewsRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "h1": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
     "pbPostNewsResponse": {
       "type": "object",
       "properties": {
@@ -202,8 +223,34 @@
         }
       }
     },
+    "pbUpdateNewsRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "h1": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "published": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
     "pbUpdateNewsResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "news": {
+          "$ref": "#/definitions/pbNews"
+        }
+      }
     }
   }
 }
