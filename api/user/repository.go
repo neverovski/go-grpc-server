@@ -63,7 +63,12 @@ func (r *postgresRepository) PostUser(ctx context.Context, u User) error {
 }
 
 func (r *postgresRepository) UpdateUser(ctx context.Context, u User) error {
-	return nil
+	sqlStatement := `
+UPDATE users
+SET username = $2, email = $3, updated_at = $4
+WHERE id = $1;`
+	_, err := r.db.Exec(sqlStatement, u.ID, u.Username, u.Email, u.UpdatedAt)
+	return err
 }
 
 func (r *postgresRepository) DeleteUser(ctx context.Context, id string) error {

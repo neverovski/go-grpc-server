@@ -105,7 +105,12 @@ func (r *postgresRepository) PostNews(ctx context.Context, n News) error {
 }
 
 func (r *postgresRepository) PutNews(ctx context.Context, n News) error {
-	return nil
+	sqlStatement := `
+UPDATE news
+SET title = $2, description = $3, h1 = $3, text = $4, published = $5, updated_at = $6
+WHERE id = $1;`
+	_, err := r.db.Exec(sqlStatement, n.ID, n.Title, n.Description, n.H1, n.Text, n.Text, n.Published, n.UpdatedAt)
+	return err
 }
 
 func (r *postgresRepository) DeleteNews(ctx context.Context, id string) error {
