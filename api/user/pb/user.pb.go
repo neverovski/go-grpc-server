@@ -43,10 +43,12 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type User struct {
-	Id        string                      `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	Username  string                      `protobuf:"bytes,2,opt,name=username" json:"username,omitempty"`
-	Email     string                      `protobuf:"bytes,3,opt,name=email" json:"email,omitempty"`
+	Id       string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	Username string `protobuf:"bytes,2,opt,name=username" json:"username,omitempty"`
+	Email    string `protobuf:"bytes,3,opt,name=email" json:"email,omitempty"`
+	// @inject_tag: sql:"type:timestamptz,default:now()"
 	CreatedAt *google_protobuf1.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt" json:"created_at,omitempty"`
+	// @inject_tag: sql:"type:timestamptz"
 	UpdatedAt *google_protobuf1.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt" json:"updated_at,omitempty"`
 }
 

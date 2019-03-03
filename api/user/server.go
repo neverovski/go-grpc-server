@@ -21,10 +21,24 @@ func ListenGRPC(s Service, port int) error {
 		return err
 	}
 
-	serv := grpc.NewServer()
-	pb.RegisterUserServiceServer(serv, &grpcServer{s})
-	reflection.Register(serv)
-	return serv.Serve(lis)
+	newServer := grpc.NewServer()
+	pb.RegisterUserServiceServer(newServer, &grpcServer{s})
+	reflection.Register(newServer)
+	return newServer.Serve(lis)
+}
+
+func (s *grpcServer) GetUser(ctx context.Context, r *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+	u, err := s.service.GetUser(ctx, r.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.GetUserResponse{
+		User: &pb.User{
+			Id:       u.ID,
+			Username: u.Username,
+			Email:    u.Email,
+		},
+	}, nil
 }
 
 func (s *grpcServer) PostUser(ctx context.Context, r *pb.PostUserRequest) (*pb.PostUserResponse, error) {
@@ -35,20 +49,6 @@ func (s *grpcServer) PostUser(ctx context.Context, r *pb.PostUserRequest) (*pb.P
 	}
 
 	return &pb.PostUserResponse{
-		User: &pb.User{
-			Id:       u.ID,
-			Username: u.Username,
-			Email:    u.Email,
-		},
-	}, nil
-}
-
-func (s *grpcServer) GetUser(ctx context.Context, r *pb.GetUserRequest) (*pb.GetUserResponse, error) {
-	u, err := s.service.GetUser(ctx, r.Id)
-	if err != nil {
-		return nil, err
-	}
-	return &pb.GetUserResponse{
 		User: &pb.User{
 			Id:       u.ID,
 			Username: u.Username,
@@ -80,6 +80,5 @@ func (s *grpcServer) DeleteUser(ctx context.Context, r *pb.DeleteUserRequest) (*
 		log.Println(err)
 		return nil, err
 	}
-
 	return &pb.DeleteUserResponse{}, nil
 }

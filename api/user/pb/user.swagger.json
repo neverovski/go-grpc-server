@@ -176,11 +176,13 @@
         },
         "created_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "title": "@inject_tag: sql:\"type:timestamptz,default:now()\""
         },
         "updated_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "title": "@inject_tag: sql:\"type:timestamptz\""
         }
       }
     }
