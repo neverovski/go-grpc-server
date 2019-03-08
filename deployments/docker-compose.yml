@@ -1,6 +1,15 @@
 version: '3.6'
 
 services:
+  news_api:
+    build:
+      context: "."
+      dockerfile: "./api/news/app.dockerfile"
+    depends_on:
+      - "news_api_db"
+    environment:
+      DATABASE_URL: "postgres://grpc-test:123456@news_api_db/grpc-test?sslmode=disable"
+
   user_api:
     build:
       context: "."
@@ -8,14 +17,25 @@ services:
     depends_on:
       - "user_api_db"
     environment:
-      DATABASE_URL: "postgres://grepc-test:123456@user_api_db/grepc-test?sslmode=disable"
+      DATABASE_URL: "postgres://grpc-test:123456@user_api_db/grpc-test?sslmode=disable"
     restart: "unless-stopped"
+
+  news_api_db:
+    build:
+      context: "./api/news"
+      dockerfile: "./db.dockerfile"
+    environment:
+      POSTGRES_DB: "grpc-test"
+      POSTGRES_USER: "grpc-test"
+      POSTGRES_PASSWORD: "123456"
+    restart: "unless-stopped"
+
   user_api_db:
     build:
       context: "./api/user"
       dockerfile: "./db.dockerfile"
     environment:
-      POSTGRES_DB: "grepc-test"
-      POSTGRES_USER: "grepc-test"
+      POSTGRES_DB: "grpc-test"
+      POSTGRES_USER: "grpc-test"
       POSTGRES_PASSWORD: "123456"
     restart: "unless-stopped"

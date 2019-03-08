@@ -13,7 +13,6 @@
 # Items to do
 
  - [X] Create protobuf 
- - [X] Graphql integration
  - [X] Docker integration
  - [ ] Postgres schema and test data scripts prepared
  - [ ] Go debugger setuped for goland

@@ -46,7 +46,11 @@ message News {
 	string text = 5;
 	bool published = 6;
 	string userId = 7;
+
+	// @inject_tag: sql:"type:timestamptz,default:now()"
 	google.protobuf.Timestamp created_at = 8;
+
+	// @inject_tag: sql:"type:timestamptz"
 	google.protobuf.Timestamp updated_at = 9;
 }
 

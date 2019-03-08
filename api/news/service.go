@@ -51,7 +51,7 @@ func (s *newsService) PostNews(ctx context.Context, title, description, h1, text
 		Description: description,
 		H1:          h1,
 		Text:        text,
-		UserID:      "Test us",
+		UserID:      "1",
 		Published:   published,
 		CreatedAt:   time.Now().UTC(),
 		UpdatedAt:   time.Now().UTC(),
@@ -71,9 +71,8 @@ func (s *newsService) UpdateNews(ctx context.Context, title, description, h1, te
 		Description: description,
 		H1:          h1,
 		Text:        text,
-		UserID:      "Test us",
+		UserID:      "1",
 		Published:   published,
-		CreatedAt:   time.Now().UTC(),
 		UpdatedAt:   time.Now().UTC(),
 	}
 
