@@ -40,7 +40,6 @@ message User {
 
     // @inject_tag: sql:"type:timestamptz,default:now()"
     google.protobuf.Timestamp created_at = 4;
-
     // @inject_tag: sql:"type:timestamptz"
     google.protobuf.Timestamp updated_at = 5;
 }
@@ -63,8 +62,9 @@ message PostUserResponse {
 }
 
 message UpdateUserRequest {
-    string username = 1;
-    string email = 2;
+    string id = 1;
+    string username = 2;
+    string email = 3;
 }
 
 message UpdateUserResponse {

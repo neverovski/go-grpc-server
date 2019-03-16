@@ -3,14 +3,12 @@ package user
 import (
 	"context"
 	"time"
-
-	"github.com/segmentio/ksuid"
 )
 
 type Service interface {
 	GetUser(ctx context.Context, id string) (*User, error)
 	PostUser(ctx context.Context, username, email string) (*User, error)
-	UpdateUser(ctx context.Context, username, email string) (*User, error)
+	UpdateUser(ctx context.Context, id, username, email string) (*User, error)
 	DeleteUser(ctx context.Context, id string) error
 }
 
@@ -36,7 +34,6 @@ func (s *userService) GetUser(ctx context.Context, id string) (*User, error) {
 
 func (s *userService) PostUser(ctx context.Context, username, email string) (*User, error) {
 	u := &User{
-		ID:        ksuid.New().String(),
 		Username:  username,
 		Email:     email,
 		CreatedAt: time.Now().UTC(),
@@ -49,9 +46,9 @@ func (s *userService) PostUser(ctx context.Context, username, email string) (*Us
 	return u, nil
 }
 
-func (s *userService) UpdateUser(ctx context.Context, username, email string) (*User, error) {
+func (s *userService) UpdateUser(ctx context.Context, id, username, email string) (*User, error) {
 	u := &User{
-		ID:        ksuid.New().String(),
+		ID:        id,
 		Username:  username,
 		Email:     email,
 		UpdatedAt: time.Now().UTC(),

@@ -58,7 +58,7 @@ func (s *grpcServer) PostUser(ctx context.Context, r *pb.PostUserRequest) (*pb.P
 }
 
 func (s *grpcServer) UpdateUser(ctx context.Context, r *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
-	u, err := s.service.UpdateUser(ctx, r.Username, r.Email)
+	u, err := s.service.UpdateUser(ctx, r.Id, r.Username, r.Email)
 
 	if err != nil {
 		return nil, err

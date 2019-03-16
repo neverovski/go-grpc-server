@@ -2,14 +2,12 @@ package user
 
 import (
 	"context"
-	"database/sql"
-
-	_ "github.com/lib/pq"
+	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 type Repository interface {
 	Close() error
-	Ping() error
 	GetUser(ctx context.Context, id string) (*User, error)
 	PostUser(ctx context.Context, n User) error
 	UpdateUser(ctx context.Context, n User) error
@@ -17,15 +15,16 @@ type Repository interface {
 }
 
 type postgresRepository struct {
-	db *sql.DB
+	db *pg.DB
 }
 
 func NewPostgresRepository(url string) (Repository, error) {
-	db, err := sql.Open("postgres", url)
-	if err != nil {
-		return nil, err
-	}
-	err = db.Ping()
+	db := pg.Connect(&pg.Options{
+		User: "postgres",
+	})
+	defer db.Close()
+
+	err := createSchema(db)
 	if err != nil {
 		return nil, err
 	}
@@ -36,49 +35,57 @@ func (r *postgresRepository) Close() error {
 	return r.db.Close()
 }
 
-func (r *postgresRepository) Ping() error {
-	return r.db.Ping()
-}
-
 func (r *postgresRepository) GetUser(ctx context.Context, id string) (*User, error) {
-	sqlStatement := "SELECT * FROM users WHERE id = $1"
+	u := &User{ID: id}
+	err := r.db.Select(u)
 
-	row := r.db.QueryRowContext(ctx, sqlStatement, id)
-	u := &User{}
-	if err := row.Scan(&u.ID, &u.Username, &u.Email, &u.UpdatedAt, &u.CreatedAt); err != nil {
+	if err != nil {
 		return nil, err
 	}
 	return u, nil
 }
 
 func (r *postgresRepository) PostUser(ctx context.Context, u User) error {
-	sqlStatement := "INSERT INTO users(id, username, email, created_at, updated_at) VALUES($1, $2, $3, $4, $5)"
+	user := &User{
+		Username:  u.Username,
+		Email:     u.Email,
+		CreatedAt: u.CreatedAt,
+		UpdatedAt: u.UpdatedAt,
+	}
 
-	_, err := r.db.ExecContext(
-		ctx,
-		sqlStatement,
-		u.ID,
-		u.Username,
-		u.Email,
-		u.CreatedAt,
-		u.UpdatedAt,
-	)
+	err := r.db.Insert(user)
 	return err
 }
 
 func (r *postgresRepository) UpdateUser(ctx context.Context, u User) error {
-	sqlStatement := "UPDATE users SET username = $2, email = $3, updated_at = $4 WHERE id = $1"
+	user := &User{
+		ID:        u.ID,
+		Username:  u.Username,
+		Email:     u.Email,
+		UpdatedAt: u.UpdatedAt,
+	}
 
-	_, err := r.db.Exec(sqlStatement, u.ID, u.Username, u.Email, u.UpdatedAt)
+	err := r.db.Update(user)
 	return err
 }
 
 func (r *postgresRepository) DeleteUser(ctx context.Context, id string) error {
-	sqlStatement := "DELETE FROM users WHERE id = ?"
+	user := &User{
+		ID: id,
+	}
 
-	_, err := r.db.Exec(
-		sqlStatement,
-		id,
-	)
+	err := r.db.Delete(user)
 	return err
+}
+
+func createSchema(db *pg.DB) error {
+	for _, model := range []interface{}{(*User)(nil)} {
+		err := db.CreateTable(model, &orm.CreateTableOptions{
+			Temp: true,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
