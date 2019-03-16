@@ -3,15 +3,13 @@ package news
 import (
 	"context"
 	"time"
-
-	"github.com/segmentio/ksuid"
 )
 
 type Service interface {
 	GetNews(ctx context.Context, id string) (*News, error)
 	GetNewsForUser(ctx context.Context, userID string) ([]News, error)
 	PostNews(ctx context.Context, title, description, h1, text string, published bool) (*News, error)
-	UpdateNews(ctx context.Context, title, description, h1, text string, published bool) (*News, error)
+	UpdateNews(ctx context.Context, id, title, description, h1, text string, published bool) (*News, error)
 	DeleteNews(ctx context.Context, id string) error
 }
 
@@ -46,7 +44,6 @@ func (s *newsService) GetNewsForUser(ctx context.Context, userID string) ([]News
 func (s *newsService) PostNews(ctx context.Context, title, description, h1, text string, published bool) (*News, error) {
 	//TODO: Realize to user ID
 	n := &News{
-		ID:          ksuid.New().String(),
 		Title:       title,
 		Description: description,
 		H1:          h1,
@@ -64,9 +61,9 @@ func (s *newsService) PostNews(ctx context.Context, title, description, h1, text
 	return n, nil
 }
 
-func (s *newsService) UpdateNews(ctx context.Context, title, description, h1, text string, published bool) (*News, error) {
+func (s *newsService) UpdateNews(ctx context.Context, id, title, description, h1, text string, published bool) (*News, error) {
 	n := &News{
-		ID:          ksuid.New().String(),
+		ID:          id,
 		Title:       title,
 		Description: description,
 		H1:          h1,

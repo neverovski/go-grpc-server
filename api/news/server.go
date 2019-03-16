@@ -56,6 +56,18 @@ func (s *grpcServer) GetNewsForUser(ctx context.Context, r *pb.GetNewsForUserReq
 
 	news := []*pb.News{}
 
+	for _, u := range userNews {
+		news = append(news, &pb.News{
+			Id:          u.ID,
+			Title:       u.Text,
+			H1:          u.H1,
+			Description: u.Description,
+			Text:        u.Text,
+			Published:   u.Published,
+			UserId:      u.UserID,
+		})
+	}
+
 	return &pb.GetNewsForUserResponse{News: news}, nil
 }
 
@@ -81,7 +93,7 @@ func (s *grpcServer) PostNews(ctx context.Context, r *pb.PostNewsRequest) (*pb.P
 }
 
 func (s *grpcServer) UpdateNews(ctx context.Context, r *pb.UpdateNewsRequest) (*pb.UpdateNewsResponse, error) {
-	n, err := s.service.UpdateNews(ctx, r.Title, r.Description, r.H1, r.Text, r.Published)
+	n, err := s.service.UpdateNews(ctx, r.Id, r.Title, r.Description, r.H1, r.Text, r.Published)
 
 	if err != nil {
 		log.Println(err)

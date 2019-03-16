@@ -2,14 +2,12 @@ package news
 
 import (
 	"context"
-	"database/sql"
-
-	_ "github.com/lib/pq"
+	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 type Repository interface {
 	Close() error
-	Ping() error
 	GetNews(ctx context.Context, id string) (*News, error)
 	GetNewsForUser(ctx context.Context, userID string) ([]News, error)
 	PostNews(ctx context.Context, n News) error
@@ -18,15 +16,17 @@ type Repository interface {
 }
 
 type postgresRepository struct {
-	db *sql.DB
+	db *pg.DB
 }
 
 func NewPostgresRepository(url string) (Repository, error) {
-	db, err := sql.Open("postgres", url)
-	if err != nil {
-		return nil, err
-	}
-	err = db.Ping()
+	db := pg.Connect(&pg.Options{
+		User: "postgres",
+	})
+
+	defer db.Close()
+
+	err := createSchema(db)
 	if err != nil {
 		return nil, err
 	}
@@ -37,81 +37,76 @@ func (r *postgresRepository) Close() error {
 	return r.db.Close()
 }
 
-func (r *postgresRepository) Ping() error {
-	return r.db.Ping()
-}
-
 func (r *postgresRepository) GetNews(ctx context.Context, id string) (*News, error) {
-	sqlStatement := "SELECT * FROM news WHERE id = $1"
-
-	row := r.db.QueryRowContext(ctx, sqlStatement, id)
-	n := &News{}
-	if err := row.Scan(&n.ID, &n.Title, &n.Description, &n.H1, &n.Text, &n.UserID, &n.Published, &n.CreatedAt, &n.UpdatedAt); err != nil {
-		return nil, err
+	news := &News{
+		ID: id,
 	}
-	return n, nil
-}
 
-func (r *postgresRepository) GetNewsForUser(ctx context.Context, userID string) ([]News, error) {
-	sqlStatement := "SELECT n.id, n.title, n.description, n.h1, n.text, n.user_id, n.published, n.created_at, n.updated_at FROM news n WHERE n.user_id = $1 ORDER BY n.id"
-
-	rows, err := r.db.QueryContext(
-		ctx,
-		sqlStatement,
-		userID,
-	)
-
+	err := r.db.Select(news)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	return news, nil
+}
 
-	news := []News{}
-	for rows.Next() {
-		n := &News{}
-		if err = rows.Scan(&n.ID, &n.Title, &n.Description, &n.H1, &n.Text, &n.UserID, &n.Published, &n.CreatedAt, &n.UpdatedAt); err == nil {
-			news = append(news, *n)
-		}
-	}
-	if err = rows.Err(); err != nil {
+func (r *postgresRepository) GetNewsForUser(ctx context.Context, userID string) ([]News, error) {
+	var news []News
+
+	err := r.db.Model(&news).Where("news.user_id = ?", userID).Select()
+
+	if err != nil {
 		return nil, err
 	}
 	return news, nil
 }
 
 func (r *postgresRepository) PostNews(ctx context.Context, n News) error {
-	sqlStatement := "INSERT INTO news(id, title, description, h1, text, user_id, published, created_at, updated_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)"
+	news := &News{
+		Title:       n.Title,
+		Description: n.Description,
+		H1:          n.H1,
+		Text:        n.Text,
+		Published:   n.Published,
+		CreatedAt:   n.CreatedAt,
+		UpdatedAt:   n.UpdatedAt,
+	}
 
-	// Insert news
-	_, err := r.db.ExecContext(
-		ctx,
-		sqlStatement,
-		n.ID,
-		n.Title,
-		n.Description,
-		n.H1,
-		n.Text,
-		n.UserID,
-		n.Published,
-		n.CreatedAt,
-		n.UpdatedAt,
-	)
+	err := r.db.Insert(news)
 	return err
 }
 
 func (r *postgresRepository) PutNews(ctx context.Context, n News) error {
-	sqlStatement := "UPDATE news SET title = $2, description = $3, h1 = $3, text = $4, published = $5, updated_at = $6 WHERE id = $1"
+	news := &News{
+		ID:          n.ID,
+		Title:       n.Title,
+		Description: n.Description,
+		H1:          n.H1,
+		Text:        n.Text,
+		Published:   n.Published,
+		UpdatedAt:   n.UpdatedAt,
+	}
 
-	_, err := r.db.Exec(sqlStatement, n.ID, n.Title, n.Description, n.H1, n.Text, n.Text, n.Published, n.UpdatedAt)
+	err := r.db.Update(news)
 	return err
 }
 
 func (r *postgresRepository) DeleteNews(ctx context.Context, id string) error {
-	sqlStatement := "DELETE FROM news WHERE id = ?"
+	news := &News{
+		ID: id,
+	}
 
-	_, err := r.db.Exec(
-		sqlStatement,
-		id,
-	)
+	err := r.db.Delete(news)
 	return err
+}
+
+func createSchema(db *pg.DB) error {
+	for _, model := range []interface{}{(*News)(nil)} {
+		err := db.CreateTable(model, &orm.CreateTableOptions{
+			Temp: true,
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
