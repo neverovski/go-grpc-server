@@ -1,41 +1,46 @@
-version: '3.6'
+version: '3.4'
 
 services:
   news_api:
+    container_name: news_api
     build:
-      context: "."
-      dockerfile: "./api/news/app.dockerfile"
+      context: ../
+      dockerfile: ./deployments/server/news.dockerfile
     depends_on:
-      - "news_api_db"
+      - news_api_db
     environment:
-      DATABASE_URL: "postgres://grpc-test:123456@news_api_db/grpc-test?sslmode=disable"
+      DATABASE_URL: postgres://grpc-api:123456@news_api_db/grpc-api?sslmode=disable
+    restart: unless-stopped
 
   user_api:
+    container_name: user_api
     build:
-      context: "."
-      dockerfile: "./api/user/app.dockerfile"
+      context: ../
+      dockerfile: ./deployments/server/user.dockerfile
     depends_on:
-      - "user_api_db"
+      - user_api_db
     environment:
-      DATABASE_URL: "postgres://grpc-test:123456@user_api_db/grpc-test?sslmode=disable"
-    restart: "unless-stopped"
+      DATABASE_URL: postgres://grpc-api:123456@user_api_db/grpc-api?sslmode=disable
+    restart: unless-stopped
 
   news_api_db:
+    container_name: news_api_db
     build:
-      context: "./api/news"
-      dockerfile: "./db.dockerfile"
+      context: ../
+      dockerfile: ./deployments/postgresql/news.dockerfile
     environment:
-      POSTGRES_DB: "grpc-test"
-      POSTGRES_USER: "grpc-test"
-      POSTGRES_PASSWORD: "123456"
-    restart: "unless-stopped"
+      POSTGRES_DB: grpc-api
+      POSTGRES_USER: grpc-api
+      POSTGRES_PASSWORD: 123456
+    restart: unless-stopped
 
   user_api_db:
+    container_name: user_api_db
     build:
-      context: "./api/user"
-      dockerfile: "./db.dockerfile"
+      context: ../
+      dockerfile: ./deployments/postgresql/user.dockerfile
     environment:
-      POSTGRES_DB: "grpc-test"
-      POSTGRES_USER: "grpc-test"
-      POSTGRES_PASSWORD: "123456"
-    restart: "unless-stopped"
+      POSTGRES_DB: grpc-api
+      POSTGRES_USER: grpc-api
+      POSTGRES_PASSWORD: 123456
+    restart: unless-stopped

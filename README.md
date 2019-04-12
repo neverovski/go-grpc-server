@@ -14,7 +14,7 @@
 
  - [X] Create protobuf 
  - [X] Docker integration
- - [ ] Postgres schema and test data scripts prepared
+ - [X] Postgres schema and test data scripts prepared
  - [ ] Go debugger setuped for goland
  - [ ] Update graphql according to postgre schema 
  - [ ] Do actuall query to postgre https://github.com/go-pg/pg
@@ -45,3 +45,11 @@ See the [`/api`](api/README.md) directory for examples.
 
 IaaS, PaaS, system and container orchestration deployment configurations and templates (docker-compose and etc).
 See the [`/deployments`](deployments/README.md) directory for examples.
+
+### `/scripts`
+
+Scripts to perform various build, install, analysis, etc operations.
+
+These scripts keep the root level Makefile small and simple (e.g., `https://github.com/hashicorp/terraform/blob/master/Makefile`).
+
+See the [`/scripts`](scripts/README.md) directory for examples.
